@@ -1,0 +1,264 @@
+import random, time
+from os import system
+
+#Use random.choice
+#Started at march 27, 2022, 7:00
+#You must assign random int first in some variable before using them because you will adding an int on a list
+#random = some_var = changes in healht/damage
+
+#Characters
+rhea_h,blenne_h,zylus_h,jc_h=100,100,100,100
+rhea_e,blenne_e,zylus_e,jc_e=70,70,70,70
+
+condition=True
+condition_r=True
+condition_b=True
+condition_j=True
+condition_z=True
+condition_e=True
+
+rhea_skills=["Funny", "Biscuits", "Ignore"]
+blenne_skills=["Ignore", "Lol", "Shot"]
+jc_skills=["Dumm", "Slam", "Punch"]
+zylus_skills=["Gloom", "Sad", "Gore"]
+
+rhea_damage=[23,32,20]
+blenne_damage=[23, 34]
+jc_damage=[21, 34, 45]
+zylus_damage=[58,34,45]
+
+rhea_biscuits=[12,14,18]
+rhea_Funny=[14,13,12]
+jc_dumm=[12,16,11]
+zylus_gloom=[20,22,20]
+zylus_sad=[7,8,5]
+blenne_lol=[7,4,8]
+
+enemy_health=[100,200,500]
+enemy_damage=[34, 23, 32]
+enemy_healt=random.choice(enemy_health)
+
+rd=random.choice(rhea_damage)
+bd=random.choice(blenne_damage)
+jd=random.choice(jc_damage)
+zd=random.choice(zylus_damage)
+ed=random.choice(enemy_damage)
+rb=random.choice(rhea_biscuits)
+rf=random.choice(rhea_Funny)
+jdm=random.choice(jc_dumm)
+zg=random.choice(zylus_gloom)
+zs=random.choice(zylus_sad)
+bl=random.choice(blenne_lol)
+
+def reff():
+	global rd,bd,jd,zd,enemy_health
+	rd=random.choice(rhea_damage)
+	bd=random.choice(blenne_damage)
+	jd=random.choice(jc_damage)
+	zd=random.choice(zylus_damage)
+	rb=random.choice(rhea_biscuits)
+	rf=random.choice(rhea_Funny)
+	jdm=random.choice(jc_dumm)
+	zg=random.choice(zylus_gloom)
+	zs=random.choice(zylus_sad)
+	bl=random.choice(blenne_lol)
+	print(f"{rd},{bd},{jd},{zd}")
+	return 0
+
+def print_atck():
+	print(f"""
+enemy_health : {enemy_healt}
+
+Rhea : h={rhea_h} e={rhea_e}
+Blenne : h={blenne_h} e={blenne_e}
+Zylus : h={zylus_h} e={zylus_e}
+Jc : h={jc_h} e={jc_e}
+		""")
+def enemy_a():
+	check_d()
+	global enemy_healt,rhea_h,zylus_h,blenne_h,jc_h,condition_e
+	choices=["rhea","blenne","zylus","jc"]
+	choice=random.choice(choices)
+	if choice=="rhea" and condition_r==True:
+		print("rhea")
+		time.sleep(2)
+		start()
+	elif choice=="blenne"and condition_b==True:
+		print("blenne")
+		time.sleep(2)
+		start()
+	elif choice=="jc"and condition_j==True:
+		print("jc")
+		time.sleep(2)
+		start()
+	elif choice=="zylus"and condition_j==True:
+		print("zylus")
+		time.sleep(2)
+		start()
+	if enemy_healt<=0:
+		print("You win!!")
+		time.sleep(2)
+		main()
+
+def rhea_a():
+	check_d()
+	reff()
+	system("clear")
+	global enemy_healt,blenne_h,jc_h,zylus_h,bd,jd,zd,rf,rb,condition_r
+	condition_r=True
+	print_atck()
+	print(rhea_skills)
+	print("what should rhea do?")
+	while condition_r==True:
+		choice_r=input(": ")
+		if choice_r=="f":
+			choice_r2=input("Whom to use?:")
+			if choice_r2=="b":
+				bd+=rf
+				print("Rhea use funny for blenne")
+				print(attack)
+				time.sleep(2)
+				blenne_a()
+			elif choice_r2=="j":
+				jd+=rf
+				print("Rhea use funny for Jc")
+				time.sleep(2)
+				blenne_a()
+			elif choice_r2=="z":
+				zd+=rf
+				print("Rhea use funny for zylus")
+				time.sleep(2)
+				blenne_a()
+			elif choice_r2=="3":
+				print(attack)
+				return 0
+		if choice_r=="b":
+			blenne_h+=random.choice(rhea_biscuits)
+			jc_h+=random.choice(rhea_biscuits)
+			zylus_h+=random.choice(rhea_biscuits)
+			blenne_a()
+		if choice_r=="i":
+			enemy_healt-=rd
+			blenne_a()
+		else:
+			rhea_a()
+
+def blenne_a():
+	check_d()
+	reff()
+	system("clear")
+	global enemy_healt,bd,bl,rd,jd,zd,condition_b
+	print_atck()
+	print(blenne_skills)
+	print("what should blenne do?")
+	while condition_b==True:
+		choice_b=input(": ")
+		if choice_b=="l":
+			choice_b2=input(": ")
+			if choice_b2=="r":
+				rd+=bl
+			elif choice_b2=="z":
+				zd+=bl
+			elif choice_b2=="j":
+				jd+=bl
+			zylus_a()
+		if choice_b=="i":
+			enemy_healt-=bd
+			zylus_a()
+		if choice_b=="s":
+			enemy_healt-=bd
+			zylus_a()
+		else:
+			blenne_a()
+
+def zylus_a():
+	check_d()
+	reff()
+	system("clear")
+	global enemy_healt,enemy_damage,zd,zs,zg,ed,condition_z
+	print_atck()
+	print(zylus_skills)
+	print("what should zylus do?")
+	while condition_z==True:
+		choice_z=input(": ")
+		if choice_z=="gl":
+			ed-=zg
+			jc_a()
+		elif choice_z=="s":
+			ed-=zs
+			jc_a()
+		elif choice_z=="go":
+			enemy_healt-=zd
+			jc_a()
+		else:
+			zylus_a()
+
+def jc_a():
+	check_d()
+	reff()
+	system("clear")
+	global enemy_healt,jd,jd,ed,condition_j
+	print_atck()
+	print(jc_skills)
+	print("what should jc do?")
+	choice_j=input(": ")
+	while condition_j==True:
+		if choice_j=="d":
+			ed-=jdm
+			sdf()
+		elif choice_j=="s":
+			enemy_healt-=jd
+			sdf()
+		elif choice_j=="p":
+			enemy_healt-=jd
+			sdf()
+		else:
+			jc_a()
+
+def sdf():
+	if enemy_healt<=-1:
+		main()
+	else:
+		enemy_a()
+
+def start():
+	global enemy_health,enemy_healt,jd,bd,condition
+	system("clear")
+	while condition==True:
+		reff()
+		rhea_a()
+		blenne_a()
+		zylus_a()
+		jc_a()
+		enemy_a()
+
+def check_d():
+	global enemy_healt,zylus_h,blenne_h,jc_h,rhea_h,condition_r,condition_b,condition_z,condition_j
+	if rhea_h<=-1:
+		condition_r=False
+	if jc_h<=-1:
+		condition_j=False
+	if zylus_h<=-1:
+		condition_z=False
+	if blenne_h<=-1:
+		condition_b=False
+	if enemy_healt<=-1:
+		print("stopppp!!!")
+		condition_e=False
+		time.sleep(2)
+
+def main():
+	global condition
+	print("""
+s = start
+e = exit
+		""")
+	choice=input(": ")
+	while condition==True:
+		if choice=="s":
+			start()
+		else:
+			main()
+
+#Main
+main()
