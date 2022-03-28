@@ -1,0 +1,98 @@
+import time, random
+from os import system
+
+#Created at monday, March 28 2022
+#this is for battle in battle.py, it much better because its turned based like waht i wanted to 
+
+eh=200
+
+p1h,p2h,p3h=100,100,100
+
+p1c=" "
+p2c=" "
+p3c=" "
+
+p1d=[12,21,19]
+p2d=[11,23,39]
+p3d=[23,34,56]
+
+c1d=True
+c2d,c3d=True,True
+ec=True
+conm=True
+cons=True
+
+def pt_bs():
+	print(f"""
+enemy: {eh}
+p1c: h={p1h} c=	{p1c} p2c: h={p2h} c={p2c} p3c: h={p3h} c={p3c}
+		""")
+
+def p1a():
+	global p1c,eh,p2h,p3h
+	dam=random.choice(p1d)
+	if p1c=="atc":
+		eh-=dam
+	if p1c=="h2":
+		p2h+=dam
+	if p1c=="h3":
+		p3h+=dam
+
+def p1ac():
+	global c1d,p1d,eh,p2h,p3h,p1c
+	if c1d==True:
+		print("p1ac")
+		pt_bs()
+		choice=input("p1 > ")
+		while True:
+			print("loop")
+			if choice=="1":
+				p1c="atc"
+				print(p1c)
+				return 0
+			if choice=="2":
+				ch2=input("To who? > ")
+				if ch2=="2":
+					p1c="h2"
+					return 0
+				if ch2=="3":
+					p1c="h3"
+					return 0
+				else:
+					p1ac()
+	else:
+		return 0
+
+def p2ac():
+	print("p2ac")
+	global eh,p2d,c2d
+	choice=input("> ")
+
+def p3ac():
+	print("p3ac")
+	global ed,p3d,c3d
+
+def eac():
+	print("eac")
+	return 0
+
+def start():
+	print("start")
+	global cons,ec,p1c,p2c,p3c
+	while cons==True:
+		p1ac()
+		p2ac()
+		p3ac()
+		eac()
+
+def main():
+	global conm
+	while conm==True:
+		choice=input("start? > ")
+		if choice=="s":
+			start()
+		else:
+			main()
+
+#Main
+main()
