@@ -8,13 +8,15 @@ eh=200
 
 p1h,p2h,p3h=100,100,100
 
-p1c=" "
-p2c=" "
-p3c=" "
+p1c="..."
+p2c="..."
+p3c="..."
 
-p1d=[12,21,19]
-p2d=[11,23,39]
+p1d=[22,21,19]
+p2d=[21,23,39]
 p3d=[23,34,56]
+
+ed=[34,32,56,31,40]
 
 c1d=True
 c2d,c3d=True,True
@@ -23,66 +25,216 @@ conm=True
 cons=True
 
 def pt_bs():
+	system("clear")
+	global p1c,eh,p1h,p2h,p3h,p2c,p3c
 	print(f"""
 enemy: {eh}
-p1c: h={p1h} c=	{p1c} p2c: h={p2h} c={p2c} p3c: h={p3h} c={p3c}
+p1c: h={p1h} c={p1c} 
+p2c: h={p2h} c={p2c} 
+p3c: h={p3h} c={p3c}
 		""")
 
-def p1a():
-	global p1c,eh,p2h,p3h
-	dam=random.choice(p1d)
-	if p1c=="atc":
-		eh-=dam
-	if p1c=="h2":
-		p2h+=dam
-	if p1c=="h3":
-		p3h+=dam
+def pattack():
+	p1c()
+	p2c()
+	p3c()
+	return 0
 
 def p1ac():
 	global c1d,p1d,eh,p2h,p3h,p1c
+	chceck_d()
 	if c1d==True:
-		print("p1ac")
 		pt_bs()
 		choice=input("p1 > ")
 		while True:
-			print("loop")
 			if choice=="1":
-				p1c="atc"
-				print(p1c)
+				p1c="attack"
 				return 0
 			if choice=="2":
 				ch2=input("To who? > ")
 				if ch2=="2":
-					p1c="h2"
+					p1c="heal p2"
 					return 0
 				if ch2=="3":
-					p1c="h3"
+					p1c="heal p3"
 					return 0
 				else:
 					p1ac()
+			else:
+				pt_bs()
+				choice=input("p1 > ")
 	else:
 		return 0
 
 def p2ac():
-	print("p2ac")
-	global eh,p2d,c2d
-	choice=input("> ")
+	global eh,p2d,c2d,p2c
+	chceck_d()
+	if c2d==True:
+		pt_bs()
+		choice=input("p2 > ")
+		while True:
+			if choice=="1":
+				p2c="attack1"
+				return 0
+			if choice=="2":
+				p2c="attack2"
+				return 0
+			else:
+				pt_bs()
+				choice=input("p2 > ")
+	else:
+		return 0
 
 def p3ac():
-	print("p3ac")
-	global ed,p3d,c3d
+	global ed,p3d,c3d,p3c
+	chceck_d()
+	if c3d==True:
+		pt_bs()
+		choice=input("p3 >")
+		while True:
+			if choice=="1":
+				p3c="attack1"
+				pt_bs()
+				return 0
+			if choice=="2":
+				p3c="attack2"
+				pt_bs()
+				return 0
+			else:
+				pt_bs()
+				choice=input("p3 > ")
+	else:
+		return 0
+
 
 def eac():
-	print("eac")
+	global ec,p1h,p2h,p3h,ed,c1d,c3d,c2d,ed
+	chceck_d()
+	if ec==True:
+		choices=["p1","p2","p3"]
+		d=random.choice(ed)
+		choice=random.choice(choices)
+		if choice=="p1" and c1d==True:
+			p1h-=d
+			print(f"enemy attacks p1!, p1 takes {d} damage!")
+			time.sleep(2)
+			return 0
+		if choice=="p2" and c2d==True:
+			p2h-=d
+			print(f"enemy attacks p2!, p2 takes {d} damage!")
+			time.sleep(2)
+			return 0
+		if choice=="p3" and c3d==True:
+			p3h-=d
+			print(f"enemy attacks p3!, p3 takes {d} damage!")
+			time.sleep(2)
+			return 0
+	else:
+		print("You winn!!")
+		time.sleep(2)
+		main()
+
+def p1_atck():
+	global eh,c1d,p1c,p1d,p2h,p3h
+	if c1d==True:
+		dam=random.choice(p1d)
+		if p1c=="attack":
+			eh-=dam
+			print(f"p1 attacks the enemy, enemy takes {dam} damage!")
+			time.sleep(2)
+			return 0
+		if p1c=="heal p2":
+			p2h+=dam
+			print(f"p1 heal p2 by {dam}")
+			time.sleep(2)
+			return 0
+		if p1c=="heal p3":
+			p3h+=dam
+			print(f"p1 heal p2 by {dam}")
+			time.sleep(2)
+			return 0
+
+		else:
+			return 0
+	else:
+		return 0 
+
+def p2_atck():
+	global eh,c2d,p2c,p2d
+	if c2d==True:
+		dam=random.choice(p2d)
+		if p2c=="attack1":
+			eh-=dam
+			print(f"p2 attacks the enemy, enemy takes {dam} damage!")
+			time.sleep(2)
+			return 0
+		if p1c=="attack2":
+			eh-=dam
+			print(f"p2 attack enemy, enemy takes {dam} damage!")
+			time.sleep(2)
+			return 0
+		else:
+			return 0
+	else:
+		return 0 
+
+def p3_atck():
+	global p1d,p3c,eh,c3d
+	if c3d==True:
+		dam=random.choice(p1d)
+		if p3c=="attack1":
+			eh-=dam
+			print(f"p3 attack hte enemy, enemy takes {dam} damgae!")
+			time.sleep(2)
+			return 0
+		if p3c=="attack2":
+			eh-=dam
+			print(f"p3 attack hte enemy, enemy takes {dam} damgae!")
+			time.sleep(2)
+			return 0
+	else:
+		return 0
+
+def rest_atck_c():
+	global p1c,p2c,p3c
+	p1c="..."
+	p2c="..."
+	p3c="..."
+
+def chceck_d():
+	global eh,p1h,p3h,p2h,ec,c1d,c2d,c3d
+	if p1h<=0:
+		c1d=False
+	if p2h<=0:
+		c2d=False
+	if p3h<=0:
+		c3d=False
+	if eh<=0:
+		ec=False
+	else:
+		return 0
 	return 0
 
+def plyr_atck():
+	p1ac()
+	p2ac()
+	p3ac()
+	p1_atck()
+	p2_atck()
+	p3_atck()
+
+def rest_evrt():
+	global ec,eh,p1h,p2h,p3h,eh,c1d,c3d,c2d
+	ec,c1d,c2d,c3d=True,True,True,True
+	p1h,p2h,p3h=100,100,100
+	eh=200
+
 def start():
-	print("start")
-	global cons,ec,p1c,p2c,p3c
+	global cons,ec,p1c,p2c,p3c,eh
+	rest_evrt()
 	while cons==True:
-		p1ac()
-		p2ac()
-		p3ac()
+		plyr_atck()
+		rest_atck_c()
 		eac()
 
 def main():
@@ -92,7 +244,7 @@ def main():
 		if choice=="s":
 			start()
 		else:
-			main()
+			return 0
 
 #Main
 main()
